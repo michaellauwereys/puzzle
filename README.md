@@ -2,10 +2,6 @@
 
 [Puzzle Community / Gamemode](https://forum.facepunch.com/t/puzzle-community-gamemode/244774)
 
-## Introduction
-
-Via this way I'm trying to get in contact with people who are interested in the puzzle gamemode. People who might have played it back in the days on Half-Life 2: Deathmatch. I will explain how the gamemode worked, and my plans to improve it (hopefully).
-
 ## What is Puzzle (original)?
 
 The gamemode is pretty simple. Players are part of the same team. They spawn in a lobby which has portals to different levels (puzzles). These puzzles can be anything. A jumping puzzle, using floating doors or boxes to get to the end without falling off, using a crane and shipping container to move players around, using a vehicle to drive on a small road without falling off, ...
