@@ -15,13 +15,8 @@ partial class PuzzlePlayer : Player
 
 	public ICamera LastCamera { get; set; }
 
-	public int checkpointCounter = 0;
-	public float posX = 0f;
-	public float posY = 0f;
-	public float posZ = 0f;
-	public float pitch = 0f;
-	public float yaw = 0f;
-	public float roll = 0f;
+	public bool cpSet = false;
+	public float[] cpPosition;
 
 	/****************************************************************************
 	 * PuzzlePlayer
@@ -36,8 +31,6 @@ partial class PuzzlePlayer : Player
 	 ***************************************************************************/
 	public override void Spawn()
 	{
-		Log.Info( "---------------------- SPAWN ----------------------" );
-
 		MainCamera = new FirstPersonCamera();
 		LastCamera = MainCamera;
 
@@ -49,8 +42,6 @@ partial class PuzzlePlayer : Player
 	 ***************************************************************************/
 	public override void Respawn()
 	{
-		Log.Info( "---------------------- RESPAWN ----------------------" );
-		
 		SetModel( "models/citizen/citizen.vmdl" );
 
 		Controller = new WalkController();
@@ -71,22 +62,16 @@ partial class PuzzlePlayer : Player
 
 		base.Respawn();
 
-		if ( checkpointCounter == 0 )
+		// If the player has a checkpoint set = teleport the player
+		if ( cpSet == true )
 		{
-			var player = Input.ActiveChild;
-			var pos = Position;
-			var ang = EyeRot.Angles();
+			Velocity = Vector3.Zero;
+			Position = new Vector3( cpPosition[0], cpPosition[1], cpPosition[2] );
+			EyeRot = Rotation.From( cpPosition[3], cpPosition[4], cpPosition[5] );
 
-			posX = pos.x;
-			posY = pos.y;
-			posZ = pos.z;
-			pitch = ang.pitch;
-			yaw = ang.yaw;
-			roll = ang.roll;
-
-			Log.Info( $"Position: {posX} {posY} {posZ} {pitch} {yaw} {roll}" );
-			checkpointCounter = 1;
+			Log.Warning( $"Teleported to: {cpPosition[0]} {cpPosition[1]} {cpPosition[2]} {cpPosition[3]} {cpPosition[4]} {cpPosition[5]}" );
 		}
+
 	}
 
 	/****************************************************************************
@@ -173,6 +158,43 @@ partial class PuzzlePlayer : Player
 	{
 		base.Simulate( cl );
 
+		// Checkpoint
+		var pos = Position;
+		var ang = EyeRot.Angles();
+
+		// Save
+		if ( Input.Pressed( InputButton.Slot1 ) )
+		{
+			cpPosition = new[] {pos.x, pos.y, pos.z, ang.pitch, ang.yaw, ang.roll};
+			Log.Warning( $"Checkpoint saved: {pos.x} {pos.y} {pos.z} {ang.pitch} {ang.yaw} {ang.roll}" );
+			PlaySound( "cp-save" );
+			cpSet = true;
+		}
+
+		// Teleport
+		if ( Input.Pressed( InputButton.Slot2 ) )
+		{
+			// Check if player has a checkpoint set
+			if ( cpSet == true )
+			{
+				Velocity = Vector3.Zero;
+				Position = new Vector3( cpPosition[0], cpPosition[1], cpPosition[2] );
+				EyeRot = Rotation.From( cpPosition[3], cpPosition[4], cpPosition[5] );
+
+				Log.Warning( $"Teleported to: {cpPosition[0]} {cpPosition[1]} {cpPosition[2]} {cpPosition[3]} {cpPosition[4]} {cpPosition[5]}" );
+				PlaySound( "cp-teleport" );
+			}
+		}
+
+		// Remove
+		if ( Input.Pressed( InputButton.Slot9 ) )
+		{
+			cpPosition = Array.Empty<float>();
+			Log.Warning( $"Checkpoint removed" );
+			PlaySound( "cp-remove" );
+			cpSet = false;
+		}
+
 		if ( Input.ActiveChild != null )
 		{
 			ActiveChild = Input.ActiveChild;
@@ -203,43 +225,6 @@ partial class PuzzlePlayer : Player
 			{
 				MainCamera = new ThirdPersonCamera();
 			}
-		}
-
-		// Checkpoint
-		if ( Input.Pressed( InputButton.Slot1 ) )
-		{
-			Log.Info( "---------------------- CHECKPOINT SAVE BUTTON IS PRESSED ----------------------" );
-
-			PlaySound( "save-cp" );
-
-			var player = ActiveChild;
-			var pos = Position;
-			var ang = EyeRot.Angles();
-
-			posX = pos.x;
-			posY = pos.y;
-			posZ = pos.z;
-			pitch = ang.pitch;
-			yaw = ang.yaw;
-			roll = ang.roll;
-
-			Log.Info( $"Position: {posX} {posY} {posZ} {pitch} {yaw} {roll}" );
-		}
-
-		if ( Input.Pressed( InputButton.Slot2 ) )
-		{
-			Log.Info( "---------------------- CHECKPOINT GO BUTTON IS PRESSED ----------------------" );
-
-			PlaySound( "go-cp" );
-
-			Velocity = Vector3.Zero;
-
-			posX = posX;
-
-			Position = new Vector3( posX, posY, posZ );
-			EyeRot = Rotation.From( pitch, yaw, roll );
-
-			Log.Info( $"Position: {posX} {posY} {posZ} {pitch} {yaw} {roll}" );
 		}
 	
 		Camera = GetActiveCamera();

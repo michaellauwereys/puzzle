@@ -127,10 +127,10 @@ public partial class GravGun : Carriable
 			else if ( Input.Down( InputButton.Attack2 ) )
 			{
 				// Play sound
-				if ( Input.Pressed( InputButton.Attack2 ) )
-				{
-					PlaySound( "charging-loop" );
-				}
+				// if ( Input.Pressed( InputButton.Attack2 ) )
+				// {
+				// 	PlaySound( "charging-loop" );
+				// }
 
 				var physicsGroup = tr.Entity.PhysicsGroup;
 
