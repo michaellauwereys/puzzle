@@ -15,6 +15,7 @@ partial class PuzzlePlayer : Player
 
 	public ICamera LastCamera { get; set; }
 
+	public int checkpointCounter = 0;
 	public float posX = 0f;
 	public float posY = 0f;
 	public float posZ = 0f;
@@ -58,7 +59,7 @@ partial class PuzzlePlayer : Player
 		MainCamera = LastCamera;
 		Camera = MainCamera;
 
-		EnableAllCollisions = true;
+		EnableAllCollisions = false;
 		EnableDrawing = true;
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
@@ -70,18 +71,22 @@ partial class PuzzlePlayer : Player
 
 		base.Respawn();
 
-		var player = Input.ActiveChild;
-		var pos = Position;
-		var ang = EyeRot.Angles();
+		if ( checkpointCounter == 0 )
+		{
+			var player = Input.ActiveChild;
+			var pos = Position;
+			var ang = EyeRot.Angles();
 
-		posX = pos.x;
-		posY = pos.y;
-		posZ = pos.z;
-		pitch = ang.pitch;
-		yaw = ang.yaw;
-		roll = ang.roll;
+			posX = pos.x;
+			posY = pos.y;
+			posZ = pos.z;
+			pitch = ang.pitch;
+			yaw = ang.yaw;
+			roll = ang.roll;
 
-		Log.Info( $"Position: {posX} {posY} {posZ} {pitch} {yaw} {roll}" );
+			Log.Info( $"Position: {posX} {posY} {posZ} {pitch} {yaw} {roll}" );
+			checkpointCounter = 1;
+		}
 	}
 
 	/****************************************************************************
