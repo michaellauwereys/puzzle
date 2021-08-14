@@ -50,7 +50,7 @@ partial class PuzzlePlayer : Player
 		MainCamera = LastCamera;
 		Camera = MainCamera;
 
-		EnableAllCollisions = false;
+		EnableAllCollisions = true;
 		EnableDrawing = true;
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
@@ -71,7 +71,6 @@ partial class PuzzlePlayer : Player
 
 			Log.Warning( $"Teleported to: {cpPosition[0]} {cpPosition[1]} {cpPosition[2]} {cpPosition[3]} {cpPosition[4]} {cpPosition[5]}" );
 		}
-
 	}
 
 	/****************************************************************************
