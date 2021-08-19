@@ -7,7 +7,7 @@ partial class PuzzleGame : Game
 	{
 		if ( IsServer )
 		{
-			new PuzzleHud();
+			// new PuzzleHud();
 		}
 	}
 

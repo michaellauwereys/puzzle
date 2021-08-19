@@ -44,7 +44,29 @@ partial class PuzzlePlayer : Player
 	{
 		SetModel( "models/citizen/citizen.vmdl" );
 
-		Controller = new WalkController();
+		Controller = new WalkController{
+			SprintSpeed = 250.0f, // 320.0f
+			WalkSpeed = 180.0f, // 150.0f
+			DefaultSpeed = 180.0f, // 190.0f
+			Acceleration = 10.0f, // 10.0f
+			AirAcceleration = 100.0f, // 50.0f
+			FallSoundZ = -30.0f, // -30.0f
+			GroundFriction = 7.0f, // 4.0f
+			StopSpeed = 100.0f, // 100.0f
+			Size = 20.0f, // 20.0f
+			DistEpsilon = 0.03125f, // 0.03125f
+			GroundAngle = 46.0f, // 46.0f
+			Bounce = 0.0f, // 0.0f
+			MoveFriction = 1.0f, // 1.0f
+			StepSize = 18.0f, // 18.0f
+			MaxNonJumpVelocity = 140.0f, // 140.0f
+			BodyGirth = 32.0f, // 32.0f
+			BodyHeight = 72.0f, // 72.0f
+			EyeHeight = 64.0f, // 64.0f
+			Gravity = 800.0f, // 800.0f
+			AirControl = 30.0f, // 30.0f
+		};
+
 		Animator = new StandardPlayerAnimator();
 
 		MainCamera = LastCamera;
