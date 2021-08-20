@@ -1,14 +1,4 @@
 // 
-// PuzzleGame : Sandbox.Game 
-// 
-@PointClass = puzzle : ""
-[
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
-]
-
-// 
 // Tool : Carriable 
 // 
 @PointClass = weapon_tool : ""
@@ -30,6 +20,24 @@
 	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+]
+
+// 
+// Testing : Sandbox.Entity 
+// 
+@PointClass 
+metadata
+{
+	entity_tool_name = "Total levels"
+	entity_tool_group = "Puzzle"
+	entity_tool_tip = "Define the total amount of levels in the map"
+}
+= puzzle_total_levels : "Define the total amount of levels in the map"
+[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	totallevels(integer) [ min="1", max="50" ] : "Total levels" : 1 : ""
+	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 ]
 
 // 

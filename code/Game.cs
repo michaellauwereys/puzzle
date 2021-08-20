@@ -1,6 +1,6 @@
 ﻿using Sandbox;
+using Sandbox.UI;
 
-[Library( "puzzle", Title = "Puzzle" )]
 partial class PuzzleGame : Game
 {
 	public PuzzleGame()
@@ -18,6 +18,8 @@ partial class PuzzleGame : Game
 		player.Respawn();
 
 		cl.Pawn = player;
+
+		Event.Run( "mygame.gameover" );
 	}
 
 	protected override void OnDestroy()

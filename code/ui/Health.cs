@@ -2,21 +2,31 @@
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
-public class Health : Panel
+public class HealthBox : Panel
 {
-	public Label Label;
-	public Label Text;
+	public Panel HealthBar;
+	public Label HealthValue;
 
-	public Health()
+	public HealthBox()
 	{
-		Label = Add.Label( "100", "value" );
+		Panel content = Add.Panel( "content" );
+
+		Panel healthBox = content.Add.Panel( "healthBox" );
+		Panel healthBar = healthBox.Add.Panel( "healthBar" );
+
+		HealthBar = healthBar.Add.Panel( "healthBar" );
+		HealthValue = healthBox.Add.Label( "0", "healthValue" );
 	}
 
 	public override void Tick()
 	{
-		var player = Local.Pawn;
-		if ( player == null ) return;
+		base.Tick();
 
-		Label.Text = $"{player.Health.CeilToInt()}";
+		var player = Local.Pawn;
+
+		HealthValue.Text = $"{player.Health.CeilToInt()}";
+
+		HealthBar.Style.Dirty();
+		HealthBar.Style.Width = Length.Percent( player.Health );
 	}
 }

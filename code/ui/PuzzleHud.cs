@@ -15,9 +15,12 @@ public partial class PuzzleHud : HudEntity<RootPanel>
 		RootPanel.AddChild<CrosshairCanvas>();
 		RootPanel.AddChild<ChatBox>();
 		RootPanel.AddChild<VoiceList>();
-		RootPanel.AddChild<KillFeed>();
+		// RootPanel.AddChild<KillFeed>();
 		RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
-		RootPanel.AddChild<Health>();
+
+		RootPanel.AddChild<Checkpoint>();
+		RootPanel.AddChild<HealthBox>();
+
 		RootPanel.AddChild<Message>();
 		RootPanel.AddChild<InventoryBar>();
 		RootPanel.AddChild<CurrentTool>();
