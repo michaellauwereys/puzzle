@@ -24,10 +24,12 @@ public class Checkpoint : Panel
 		var player = Local.Pawn;
 
 		int countdown = PuzzlePlayer.Countdown;
+		float cdPercentage = (countdown / 18000f) * 100f;
 
 		if ( countdown == 0 )
 		{
 			CpValue.Text = "5:00";
+			CpBar.Style.Width = Length.Percent( 100 );
 		}
 		else
 		{
@@ -35,9 +37,9 @@ public class Checkpoint : Panel
 			string str = time.ToString( @"hh\:mm" );
 
 			CpValue.Text = str;
-		}
 
-		CpBar.Style.Dirty();
-		CpBar.Style.Width = Length.Percent( 100 );
+			CpBar.Style.Dirty();
+			CpBar.Style.Width = Length.Percent( cdPercentage );
+		}
 	}
 }
