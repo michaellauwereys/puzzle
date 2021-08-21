@@ -27,17 +27,13 @@ partial class PuzzlePlayer : Player
 
 	}
 
-	/****************************************************************************
-	 * PuzzlePlayer
-	 ***************************************************************************/
+	TimeSince timeSincePressed;
+
 	public PuzzlePlayer()
 	{
 		Inventory = new Inventory( this );
 	}
 
-	/****************************************************************************
-	 * Spawn
-	 ***************************************************************************/
 	public override void Spawn()
 	{
 		MainCamera = new FirstPersonCamera();
@@ -46,9 +42,6 @@ partial class PuzzlePlayer : Player
 		base.Spawn();
 	}
 
-	/****************************************************************************
-	 * Respwn
-	 ***************************************************************************/
 	public override void Respawn()
 	{
 		SetModel( "models/citizen/citizen.vmdl" );
@@ -104,9 +97,6 @@ partial class PuzzlePlayer : Player
 		}
 	}
 
-	/****************************************************************************
-	 * OnKilled
-	 ***************************************************************************/
 	public override void OnKilled()
 	{
 		base.OnKilled();
@@ -137,9 +127,6 @@ partial class PuzzlePlayer : Player
 		Inventory.DeleteContents();
 	}
 
-	/****************************************************************************
-	 * TakeDamage
-	 ***************************************************************************/
 	public override void TakeDamage( DamageInfo info )
 	{
 		if ( GetHitboxGroup( info.HitboxIndex ) == 1 )
@@ -181,9 +168,6 @@ partial class PuzzlePlayer : Player
 		return MainCamera;
 	}
 
-	/****************************************************************************
-	 * Simulate
-	 ***************************************************************************/
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
@@ -200,33 +184,43 @@ partial class PuzzlePlayer : Player
 		// Save
 		if ( Input.Pressed( InputButton.Slot1 ) )
 		{
-			if ( countdown == 0 )
+			if ( timeSincePressed > 0.5f )
 			{
-				cpPosition = new[] { pos.x, pos.y, pos.z, ang.pitch, ang.yaw, ang.roll };
-				Log.Warning( $"Checkpoint saved: {pos.x} {pos.y} {pos.z} {ang.pitch} {ang.yaw} {ang.roll}" );
-				PlaySound( "cp-save" );
-				cpSet = true;
-				countdown = 5 * 3600; 
-			}
-			else
-			{
-				PlaySound( "cp-error" );
-				Log.Error( "5 min cooldown active!" );
+				if ( countdown == 0 )
+				{
+					cpPosition = new[] { pos.x, pos.y, pos.z, ang.pitch, ang.yaw, ang.roll };
+					Log.Warning( $"Checkpoint saved: {pos.x} {pos.y} {pos.z} {ang.pitch} {ang.yaw} {ang.roll}" );
+					PlaySound( "cp-save" );
+					cpSet = true;
+					countdown = 5 * 3600; 
+				}
+				else
+				{
+					PlaySound( "cp-error" );
+					Log.Error( "5 min cooldown active!" );
+				}
+
+				timeSincePressed = 0;
 			}
 		}
 
 		// Teleport
 		if ( Input.Pressed( InputButton.Slot2 ) )
 		{
-			// Check if player has a checkpoint set
-			if ( cpSet == true )
+			if ( timeSincePressed > 0.5f )
 			{
-				Velocity = Vector3.Zero;
-				Position = new Vector3( cpPosition[0], cpPosition[1], cpPosition[2] );
-				EyeRot = Rotation.From( cpPosition[3], cpPosition[4], cpPosition[5] );
+				// Check if player has a checkpoint set
+				if ( cpSet == true )
+				{
+					Velocity = Vector3.Zero;
+					Position = new Vector3( cpPosition[0], cpPosition[1], cpPosition[2] );
+					EyeRot = Rotation.From( cpPosition[3], cpPosition[4], cpPosition[5] );
 
-				Log.Warning( $"Teleported to: {cpPosition[0]} {cpPosition[1]} {cpPosition[2]} {cpPosition[3]} {cpPosition[4]} {cpPosition[5]}" );
-				PlaySound( "cp-teleport" );
+					Log.Warning( $"Teleported to: {cpPosition[0]} {cpPosition[1]} {cpPosition[2]} {cpPosition[3]} {cpPosition[4]} {cpPosition[5]}" );
+					PlaySound( "cp-teleport" );
+				}
+
+				timeSincePressed = 0;
 			}
 		}
 
