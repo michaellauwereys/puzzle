@@ -1,6 +1,7 @@
 ﻿using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
+using System;
 
 public class Checkpoint : Panel
 {
@@ -30,7 +31,10 @@ public class Checkpoint : Panel
 		}
 		else
 		{
-			CpValue.Text = countdown.ToString();
+			TimeSpan time = TimeSpan.FromSeconds( countdown );
+			string str = time.ToString( @"hh\:mm" );
+
+			CpValue.Text = str;
 		}
 
 		CpBar.Style.Dirty();
