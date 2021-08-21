@@ -2,16 +2,14 @@
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
-public class HealthBox : Panel
+public class Health : Panel
 {
 	public Panel HealthBar;
 	public Label HealthValue;
 
-	public HealthBox()
+	public Health()
 	{
-		Panel content = Add.Panel( "content" );
-
-		Panel healthBox = content.Add.Panel( "healthBox" );
+		Panel healthBox = Add.Panel( "healthBox" );
 		Panel healthBar = healthBox.Add.Panel( "healthBar" );
 
 		HealthBar = healthBar.Add.Panel( "healthBar" );

@@ -13,6 +13,5 @@ public partial class Testing : Entity
   protected virtual void TotalLevelss()
   {
     Log.Warning( $"Total levels: {TotalLevels}" );
-    ChatBox.Say( "TEST" );
   }
 }

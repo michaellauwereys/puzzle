@@ -54,15 +54,15 @@ InventoryBar {
 }
 
 InventoryIcon {
-	width: 80px;
-	height: 80px;
+	width: 60px;
+	height: 60px;
 	background-color: rgba( #222, 0.3 );
-	margin: 0px 2px;
+	margin: 0px 5px;
 	position: relative;
 	transition: all 0.2s ease-in-out;
-	margin-top: 10px;
 	font-family: poppins;
 	border-radius: 40px;
+	backdrop-filter: blur( 10px );
 
 	.item-name {
 		padding: 5px;
@@ -79,22 +79,9 @@ InventoryIcon {
 		display: none;
 	}
 
-	.slot-number {
-		font-size: 25px;
-		color: black;
-		font-weight: 900;
-		opacity: 0.3;
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-	}
-
 	&.active {
 		background-color: rgba( #000000, 0.5 );
 		transition: all 0.1s ease-out;
-		width: 80px;
-		height: 80px;
 		border-radius: 40px;
 
 		.slot-number {
@@ -176,19 +163,29 @@ chatbox {
 	position: absolute;
 	left: 50px;
 	bottom: 100px;
+
+	textentry {
+		border-radius: 5px;
+	}
+
+	.chat_canvas {
+		//background-color: red;
+		height: 312px;
+		overflow: scroll;
+		justify-content: flex-end;
+	}
+}
+
+chatentry {
 	border-radius: 5px;
 }
 
-.testbox {
-	background-color: rgba(0, 0, 0, 0.3);
-	border-radius: 0%, 5%, 5%, 0%;
-	color: #fff;
-	font-family: Bungee;
-	font-size: 12px;
-	padding: 20px;
-	position: absolute;
-	top: 50px;
-}
+
+
+
+
+
+
 
 .options {
 	background-color: rgba(0, 0, 0, 0.3);
@@ -198,59 +195,99 @@ chatbox {
 	font-size: 12px;
 	padding: 20px;
 	position: absolute;
-	top: 50px;
+	top: 30px;
+	backdrop-filter: blur( 10px );
 }
 
-.content {
-	width: 100%;
-	height: 100%;
-	position: relative;
-}
 
-.healthBox {
+
+
+
+
+
+
+
+Health {
 	position: absolute;
-	background-color: rgba(0, 0, 0, 0.3);
-	width: 200px;
-	bottom: 50px;
 	right: 50px;
-	border-radius: 5px;
+	bottom: 50px;
+
+	.healthBox {
+		background-color: rgba(0, 0, 0, 0.3);
+		width: 200px;
+		border-radius: 5px;
+
+		.healthBar {
+			position: relative;
+			background-color: rgba(255, 0, 0, 0.2);
+			height: 30px;
+			border-radius: 5px;
+			backdrop-filter: blur( 10px );
+		}
+
+		.healthValue {
+			position: absolute;
+			font-size: 24px;
+			font-family: Bungee;
+			color: #ffffff;
+			right: 10px;
+		}
+	}
 }
 
-.healthBar {
-	position: relative;
-	background-color: rgba(255, 0, 0, 0.2);
-	height: 30px;
-	border-radius: 5px;
-}
-
-.healthValue {
-	position: absolute;
-	font-size: 24px;
-	font-family: Bungee;
-	color: #ffffff;
-	right: 10px;
-}
-
-.cpBox {
-	position: absolute;
-	background-color: rgba(0, 0, 0, 0.3);
-	width: 200px;
+Checkpoint {
 	bottom: 50px;
 	left: 50px;
-	border-radius: 5px;
-}
-
-.cpBar {
-	position: relative;
-	background-color: rgba(150, 0, 150, 0.2);
-	height: 30px;
-	border-radius: 5px;
-}
-
-.cpValue {
 	position: absolute;
-	font-size: 24px;
+
+
+	.cpBox {
+		background-color: rgba(0, 0, 0, 0.3);
+		border-radius: 5px;
+		width: 200px;
+
+		.cpBar {
+			position: relative;
+			background-color: rgba(150, 0, 150, 0.2);
+			height: 30px;
+			border-radius: 5px;
+			backdrop-filter: blur( 10px );
+		}
+
+		.cpValue {
+			position: absolute;
+			font-size: 24px;
+			font-family: Bungee;
+			color: #ffffff;
+			left: 10px;
+		}
+	}
+}
+
+TotalLevels {
+	position: absolute;
+	top: 30px;
+	left: 50%;
+	display: flex;
+	transform: translateX( -50% );
+	color: #fff;
 	font-family: Bungee;
-	color: #ffffff;
-	left: 10px;
+
+	.levelBox {
+		position: relative;
+		float: left;
+		width: 40px;
+		height: 40px;
+		background-color: rgba(0, 0, 0, 0.3);
+		border-radius: 20px;
+		margin-right: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		backdrop-filter: blur( 10px );
+
+		.levelNumber {
+			position: absolute;
+		}
+	}
 }

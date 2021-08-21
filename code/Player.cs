@@ -18,6 +18,15 @@ partial class PuzzlePlayer : Player
 	public bool cpSet = false;
 	public float[] cpPosition;
 
+	public static int countdown = 0;
+
+	public static int Countdown
+	{
+		get { return countdown; }
+		set { countdown = value; }
+
+	}
+
 	/****************************************************************************
 	 * PuzzlePlayer
 	 ***************************************************************************/
@@ -51,7 +60,7 @@ partial class PuzzlePlayer : Player
 			Acceleration = 10.0f, // 10.0f
 			AirAcceleration = 100.0f, // 50.0f
 			FallSoundZ = -30.0f, // -30.0f
-			GroundFriction = 7.0f, // 4.0f
+			GroundFriction = 4.0f, // 4.0f
 			StopSpeed = 100.0f, // 100.0f
 			Size = 20.0f, // 20.0f
 			DistEpsilon = 0.03125f, // 0.03125f
@@ -183,13 +192,27 @@ partial class PuzzlePlayer : Player
 		var pos = Position;
 		var ang = EyeRot.Angles();
 
+		if ( countdown > 0 )
+		{
+			countdown--;
+		}
+
 		// Save
 		if ( Input.Pressed( InputButton.Slot1 ) )
 		{
-			cpPosition = new[] {pos.x, pos.y, pos.z, ang.pitch, ang.yaw, ang.roll};
-			Log.Warning( $"Checkpoint saved: {pos.x} {pos.y} {pos.z} {ang.pitch} {ang.yaw} {ang.roll}" );
-			PlaySound( "cp-save" );
-			cpSet = true;
+			if ( countdown == 0 )
+			{
+				cpPosition = new[] { pos.x, pos.y, pos.z, ang.pitch, ang.yaw, ang.roll };
+				Log.Warning( $"Checkpoint saved: {pos.x} {pos.y} {pos.z} {ang.pitch} {ang.yaw} {ang.roll}" );
+				PlaySound( "cp-save" );
+				cpSet = true;
+				countdown = 5 * 3600; 
+			}
+			else
+			{
+				PlaySound( "cp-error" );
+				Log.Error( "5 min cooldown active!" );
+			}
 		}
 
 		// Teleport

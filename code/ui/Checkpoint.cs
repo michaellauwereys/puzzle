@@ -9,9 +9,7 @@ public class Checkpoint : Panel
 
 	public Checkpoint()
 	{
-		Panel content = Add.Panel( "content" );
-
-		Panel cpBox = content.Add.Panel( "cpBox" );
+		Panel cpBox = Add.Panel( "cpBox" );
 		Panel cpBar = cpBox.Add.Panel( "cpBar" );
 
 		CpBar = cpBar.Add.Panel( "cpBar" );
@@ -24,7 +22,16 @@ public class Checkpoint : Panel
 
 		var player = Local.Pawn;
 
-		CpValue.Text = "5:00";
+		int countdown = PuzzlePlayer.Countdown;
+
+		if ( countdown == 0 )
+		{
+			CpValue.Text = "5:00";
+		}
+		else
+		{
+			CpValue.Text = countdown.ToString();
+		}
 
 		CpBar.Style.Dirty();
 		CpBar.Style.Width = Length.Percent( 100 );
