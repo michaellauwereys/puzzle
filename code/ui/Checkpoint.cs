@@ -29,6 +29,7 @@ public class Checkpoint : Panel
 		if ( countdown == 0 )
 		{
 			CpValue.Text = "5:00";
+			CpBar.Style.Dirty();
 			CpBar.Style.Width = Length.Percent( 100 );
 		}
 		else
