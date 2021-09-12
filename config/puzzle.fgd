@@ -1,5 +1,5 @@
 // 
-// Tool : Carriable 
+// Tool
 // 
 @PointClass = weapon_tool : ""
 [
@@ -11,7 +11,7 @@
 ]
 
 // 
-// GravGun : Carriable 
+// GravGun
 // 
 @PointClass = gravgun : ""
 [
@@ -23,7 +23,7 @@
 ]
 
 // 
-// Testing : Sandbox.Entity 
+// Testing
 // 
 @PointClass 
 metadata
@@ -41,7 +41,7 @@ metadata
 ]
 
 // 
-// Flashlight : Weapon 
+// Flashlight
 // 
 @PointClass = weapon_flashlight : ""
 [

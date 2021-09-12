@@ -29,9 +29,26 @@ partial class PuzzlePlayer : Player
 
 	TimeSince timeSincePressed;
 
+	/// <summary>
+	/// The clothing container is what dresses the citizen
+	/// </summary>
+	public Clothing.Container Clothing = new();
+
+	/// <summary>
+	/// Default init
+	/// </summary>
 	public PuzzlePlayer()
 	{
 		Inventory = new Inventory( this );
+	}
+
+	/// <summary>
+	/// Initialize using this client
+	/// </summary>
+	public PuzzlePlayer( Client cl ) : this()
+	{
+		// Load clothing from client data
+		Clothing.LoadFromClient( cl );
 	}
 
 	public override void Spawn()
@@ -79,7 +96,7 @@ partial class PuzzlePlayer : Player
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
-		Dress();
+		Clothing.DressEntity( this );
 
 		Inventory.Add( new GravGun(), true );
 		Inventory.Add( new Flashlight() );

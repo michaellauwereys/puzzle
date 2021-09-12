@@ -14,7 +14,7 @@ partial class PuzzleGame : Game
 	public override void ClientJoined( Client cl )
 	{
 		base.ClientJoined( cl );
-		var player = new PuzzlePlayer();
+		var player = new PuzzlePlayer( cl );
 		player.Respawn();
 
 		cl.Pawn = player;
